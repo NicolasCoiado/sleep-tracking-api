@@ -1,6 +1,6 @@
 package br.com.nvnk.SleepTracking.security;
 
-import br.com.nvnk.SleepTracking.respository.UserRepository;
+import br.com.nvnk.SleepTracking.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package br.com.nvnk.SleepTracking.service;
 
 import br.com.nvnk.SleepTracking.exception.UserNotFoundException;
-import br.com.nvnk.SleepTracking.respository.UserRepository;
+import br.com.nvnk.SleepTracking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
