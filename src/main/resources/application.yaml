@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: SleepTrackingAPI
+
+  data:
+     mongodb:
+       host: localhost
+       port: 27017
+       database: sleep_tracking
+       username: ${MONGO_USER}
+       password: ${MONGO_PASSWORD}
+       authentication-database: admin
