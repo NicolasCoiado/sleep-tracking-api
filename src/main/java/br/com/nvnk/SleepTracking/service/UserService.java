@@ -3,7 +3,7 @@ package br.com.nvnk.SleepTracking.service;
 import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.exception.UserEmailAlreadyInUse;
 import br.com.nvnk.SleepTracking.exception.UserNotFoundException;
-import br.com.nvnk.SleepTracking.respository.UserRepository;
+import br.com.nvnk.SleepTracking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,5 +29,8 @@ public class UserService {
         return repository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("Username not found."));
     }
 
+    public User findById (String id){
+        return repository.findById(id).orElseThrow(()-> new UserNotFoundException("Username not found."));
+    }
 
 }
