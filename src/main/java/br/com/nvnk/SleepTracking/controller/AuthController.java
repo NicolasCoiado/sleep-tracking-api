@@ -1,11 +1,10 @@
 package br.com.nvnk.SleepTracking.controller;
 
-import br.com.nvnk.SleepTracking.controller.dto.LoginRequest;
-import br.com.nvnk.SleepTracking.controller.dto.UserRequest;
+import br.com.nvnk.SleepTracking.controller.dto.request.LoginRequest;
+import br.com.nvnk.SleepTracking.controller.dto.request.UserRequest;
 import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.mapper.UserMapper;
 import br.com.nvnk.SleepTracking.security.TokenService;
-import br.com.nvnk.SleepTracking.service.AuthorizationService;
 import br.com.nvnk.SleepTracking.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +28,6 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final UserService userService;
-    private final AuthorizationService authorizationService;
-
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register (@Valid @RequestBody UserRequest userRequest){

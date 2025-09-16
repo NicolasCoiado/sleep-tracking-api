@@ -1,4 +1,4 @@
-package br.com.nvnk.SleepTracking.controller.dto;
+package br.com.nvnk.SleepTracking.controller.dto.response;
 
 import br.com.nvnk.SleepTracking.entity.UserRole;
 

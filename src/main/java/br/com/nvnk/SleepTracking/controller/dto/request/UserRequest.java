@@ -1,4 +1,4 @@
-package br.com.nvnk.SleepTracking.controller.dto;
+package br.com.nvnk.SleepTracking.controller.dto.request;
 
 import br.com.nvnk.SleepTracking.entity.UserRole;
 import jakarta.validation.constraints.Email;

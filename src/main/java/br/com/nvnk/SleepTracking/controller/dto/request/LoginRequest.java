@@ -1,4 +1,4 @@
-package br.com.nvnk.SleepTracking.controller.dto;
+package br.com.nvnk.SleepTracking.controller.dto.request;
 
 public record LoginRequest(
         String email,
