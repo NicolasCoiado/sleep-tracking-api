@@ -1,4 +1,4 @@
-package br.com.nvnk.SleepTracking.respository;
+package br.com.nvnk.SleepTracking.repository;
 
 import br.com.nvnk.SleepTracking.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
