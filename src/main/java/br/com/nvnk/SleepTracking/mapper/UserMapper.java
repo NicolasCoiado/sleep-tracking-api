@@ -1,9 +1,11 @@
 package br.com.nvnk.SleepTracking.mapper;
 
-import br.com.nvnk.SleepTracking.controller.dto.UserRequest;
-import br.com.nvnk.SleepTracking.controller.dto.UserResponse;
+import br.com.nvnk.SleepTracking.controller.dto.request.UserRequest;
+import br.com.nvnk.SleepTracking.controller.dto.response.UserResponse;
 import br.com.nvnk.SleepTracking.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper {
 
     public static User toEntity(UserRequest request) {
