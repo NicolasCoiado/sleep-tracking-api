@@ -9,7 +9,9 @@ public record SleepAttemptRequest(
         String userId,
         @NotNull
         boolean success,
+        @NotNull
         LocalDateTime bedTime,
+        @NotNull
         LocalDateTime wakeTime,
         LocalDateTime sleepStartTime,
         LocalDateTime sleepEndTime
