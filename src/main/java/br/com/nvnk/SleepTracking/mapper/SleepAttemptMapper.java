@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SleepAttemptMapper {
-    public static SleepAttempt toEntity (SleepAttemptRequest sleepAttemptRequest) {
+    public SleepAttempt toEntity (SleepAttemptRequest sleepAttemptRequest) {
 
         SleepAttempt sleepAttempt = new SleepAttempt();
 
@@ -21,7 +21,7 @@ public class SleepAttemptMapper {
         return sleepAttempt;
     }
 
-    public static SleepAttemptResponse toResponse(SleepAttempt sleepAttempt) {
+    public SleepAttemptResponse toResponse(SleepAttempt sleepAttempt) {
         return new SleepAttemptResponse(
                 sleepAttempt.getId(),
                 sleepAttempt.getUserId(),
