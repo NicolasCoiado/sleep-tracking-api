@@ -43,16 +43,18 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login (@Valid @RequestBody LoginRequest loginRequest){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest loginRequest) {
+        var authToken = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password());
+        var auth = authenticationManager.authenticate(authToken);
 
+        var token = tokenService.generateToken((User) auth.getPrincipal());
 
         Map<String, Object> response = new HashMap<>();
         response.put("Message", "Login successful.");
+        response.put("User", auth.getPrincipal());
         response.put("Token", token);
 
         return ResponseEntity.ok(response);
     }
+
 }
