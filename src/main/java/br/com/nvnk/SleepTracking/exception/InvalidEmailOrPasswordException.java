@@ -1,7 +1,7 @@
 package br.com.nvnk.SleepTracking.exception;
 
-public class InvalidEmailOrPassword extends RuntimeException {
-    public InvalidEmailOrPassword(String message) {
+public class InvalidEmailOrPasswordException extends RuntimeException {
+    public InvalidEmailOrPasswordException(String message) {
         super(message);
     }
 }

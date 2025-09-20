@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -13,14 +15,25 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(UserEmailAlreadyInUse.class)
-    public ResponseEntity<String> handleEmailInUse(UserEmailAlreadyInUse ex) {
+    @ExceptionHandler(UserEmailAlreadyInUseException.class)
+    public ResponseEntity<String> handleEmailInUse(UserEmailAlreadyInUseException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-    @ExceptionHandler(InvalidEmailOrPassword.class)
-    public ResponseEntity<String> handleUserNotFound(InvalidEmailOrPassword ex) {
+    @ExceptionHandler(InvalidEmailOrPasswordException.class)
+    public ResponseEntity<String> handleUserNotFound(InvalidEmailOrPasswordException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SleepAttemptInvalidException.class)
+    public ResponseEntity<String> handleSleepAttemtInvalid (SleepAttemptInvalidException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SleepAttemptNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNotFound(SleepAttemptNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)

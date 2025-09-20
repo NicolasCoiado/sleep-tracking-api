@@ -1,7 +1,7 @@
 package br.com.nvnk.SleepTracking.exception;
 
-public class UserEmailAlreadyInUse extends RuntimeException {
-    public UserEmailAlreadyInUse(String message) {
+public class UserEmailAlreadyInUseException extends RuntimeException {
+    public UserEmailAlreadyInUseException(String message) {
         super(message);
     }
 }
