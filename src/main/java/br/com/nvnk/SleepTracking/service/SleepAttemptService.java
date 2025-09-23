@@ -107,4 +107,12 @@ public class SleepAttemptService {
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No attempts found from " + start + " to " + end));
     }
 
+    public SleepAttempt getSleepAttemptById(String id) {
+        String userId = authorizationService.getAuthenticatedUserId();
+
+        return repository.findById(id)
+                .filter(attempt -> attempt.getUserId().equals(userId))
+                .orElseThrow(() -> new SleepAttemptNotFoundException("Sleep attempt not found with id " + id));
+    }
+
 }
