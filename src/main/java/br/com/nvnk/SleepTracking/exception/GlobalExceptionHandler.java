@@ -2,6 +2,7 @@ package br.com.nvnk.SleepTracking.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -37,9 +38,18 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Map<String, String>> handleMissingParam(MissingServletRequestParameterException ex) {
+        String paramName = ex.getParameterName();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", "Missing required parameter: " + paramName));
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidDateFormat(MethodArgumentTypeMismatchException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Invalid date format. Expected format: yyyy-MM-dd"));
+    public ResponseEntity<Map<String, String>> handleInvalidParam(MethodArgumentTypeMismatchException ex) {
+        String paramName = ex.getName();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", "Invalid value for parameter: " + paramName));
     }
 
     @ExceptionHandler(Exception.class)
