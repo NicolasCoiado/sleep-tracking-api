@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.service;
 
+import br.com.nvnk.SleepTracking.controller.dto.request.SleepAttemptRequest;
 import br.com.nvnk.SleepTracking.entity.SleepAttempt;
 import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.exception.SleepAttemptInvalidException;
@@ -9,7 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -69,4 +74,13 @@ public class SleepAttemptService {
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No successful sleep attempts found"));
     }
 
+    public List<SleepAttempt> findAttemptsByDayAndUser(LocalDate date) {
+        String userId = authorizationService.getAuthenticatedUserId();
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+
+        return repository.findByUserIdAndBedTimeBetween(userId, startOfDay, endOfDay)
+                .orElseThrow(() -> new SleepAttemptNotFoundException("No sleep attempts found for " + date));
+    }
 }

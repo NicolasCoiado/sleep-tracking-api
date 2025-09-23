@@ -7,10 +7,12 @@ import br.com.nvnk.SleepTracking.mapper.SleepAttemptMapper;
 import br.com.nvnk.SleepTracking.service.SleepAttemptService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +39,9 @@ public class SleepController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{id}") // TODO: Verify the owner's ID
-    public ResponseEntity<Map<String, Object>> findAttemptsByUser (@PathVariable String id){
-        List<SleepAttempt> allAttempts = service.findAttemptsByUser(id);
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> findAttemptsByUser (){
+        List<SleepAttempt> allAttempts = service.findAttemptsByUser();
         List<SleepAttemptResponse> sleepAttemptsDTOResponse = allAttempts.stream().map(sleepAttemptMapper::toResponse).toList();
 
         Map<String, Object> response = new HashMap<>();
@@ -49,9 +51,9 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}/success") // TODO: Verify the owner's ID
-    public ResponseEntity<Map<String, Object>> findSuccessfulAttemptsByUser(@PathVariable String id) {
-        List<SleepAttempt> attempts = service.findSuccessfulAttemptsByUser(id);
+    @GetMapping("/success")
+    public ResponseEntity<Map<String, Object>> findSuccessfulAttemptsByUser() {
+        List<SleepAttempt> attempts = service.findSuccessfulAttemptsByUser();
         List<SleepAttemptResponse> responseDTOs =
                 attempts.stream().map(sleepAttemptMapper::toResponse).toList();
 
@@ -62,9 +64,9 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}/unsuccessfully") // TODO: Verify the owner's ID
-    public ResponseEntity<Map<String, Object>> findUnsuccessfullyAttemptsByUser(@PathVariable String id) {
-        List<SleepAttempt> attempts = service.findUnsuccessfulAttemptsByUser(id);
+    @GetMapping("/unsuccessfully")
+    public ResponseEntity<Map<String, Object>> findUnsuccessfullyAttemptsByUser() {
+        List<SleepAttempt> attempts = service.findUnsuccessfulAttemptsByUser();
         List<SleepAttemptResponse> responseDTOs =
                 attempts.stream().map(sleepAttemptMapper::toResponse).toList();
 
@@ -74,4 +76,19 @@ public class SleepController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/by-day")
+    public ResponseEntity<Map<String, Object>> findAttemptsByDay(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<SleepAttempt> attempts = service.findAttemptsByDayAndUser(date);
+        List<SleepAttemptResponse> responseDTOs = attempts.stream()
+                .map(sleepAttemptMapper::toResponse)
+                .toList();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Sleep attempts found for " + date);
+        response.put("Attempts", responseDTOs);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
