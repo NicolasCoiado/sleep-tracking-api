@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(SleepAttemptInvalidException.class)
-    public ResponseEntity<String> handleSleepAttemtInvalid (SleepAttemptInvalidException ex) {
+    public ResponseEntity<String> handleSleepAttemptInvalid (SleepAttemptInvalidException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
