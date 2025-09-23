@@ -108,4 +108,21 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/by-range")
+    public ResponseEntity<Map<String, Object>> findAttemptsByRange(
+            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+
+        List<SleepAttempt> attempts = service.findAttemptsByRangeAndUser(start, end);
+        List<SleepAttemptResponse> responseDTOs = attempts.stream()
+                .map(sleepAttemptMapper::toResponse)
+                .toList();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Sleep attempts found from " + start + " to " + end);
+        response.put("Attempts", responseDTOs);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

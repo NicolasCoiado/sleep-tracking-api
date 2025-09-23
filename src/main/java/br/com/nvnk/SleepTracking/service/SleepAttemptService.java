@@ -97,4 +97,14 @@ public class SleepAttemptService {
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No attempts found for " + year + "-" + month));
     }
 
+    public List<SleepAttempt> findAttemptsByRangeAndUser(LocalDate start, LocalDate end) {
+        String userId = authorizationService.getAuthenticatedUserId();
+
+        LocalDateTime startDate = start.atStartOfDay();
+        LocalDateTime endDate = end.atTime(LocalTime.MAX);
+
+        return repository.findByUserIdAndBedTimeBetween(userId, startDate, endDate)
+                .orElseThrow(() -> new SleepAttemptNotFoundException("No attempts found from " + start + " to " + end));
+    }
+
 }
