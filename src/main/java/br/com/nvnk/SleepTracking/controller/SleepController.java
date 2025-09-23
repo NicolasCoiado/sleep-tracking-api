@@ -91,4 +91,21 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/by-month")
+    public ResponseEntity<Map<String, Object>> findAttemptsByMonth(
+            @RequestParam("year") int year,
+            @RequestParam("month") int month) {
+
+        List<SleepAttempt> attempts = service.findAttemptsByMonthAndUser(year, month);
+        List<SleepAttemptResponse> responseDTOs = attempts.stream()
+                .map(sleepAttemptMapper::toResponse)
+                .toList();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Sleep attempts found for " + year + "-" + month);
+        response.put("Attempts", responseDTOs);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
