@@ -1,6 +1,7 @@
 package br.com.nvnk.SleepTracking.service;
 
 import br.com.nvnk.SleepTracking.entity.SleepAttempt;
+import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.exception.SleepAttemptInvalidException;
 import br.com.nvnk.SleepTracking.exception.SleepAttemptNotFoundException;
 import br.com.nvnk.SleepTracking.repository.SleepAttemptRepository;
@@ -16,10 +17,11 @@ public class SleepAttemptService {
 
     private final SleepAttemptRepository repository;
     private final UserService userService;
+    private final AuthorizationService authorizationService;
 
     public SleepAttempt save(SleepAttempt sleepAttempt) {
 
-        userService.findById(sleepAttempt.getUserId());
+        User byId = userService.findById(sleepAttempt.getUserId());
 
         if (sleepAttempt.getBedTime() == null || sleepAttempt.getWakeTime() == null) {
             throw new SleepAttemptInvalidException("getBedTime and getWakeTime cannot be null.");
@@ -51,18 +53,19 @@ public class SleepAttemptService {
         return repository.save(sleepAttempt);
     }
 
-    public List<SleepAttempt> findAttemptsByUser(String id) {
-        return repository.findByUserId(id)
+    public List<SleepAttempt> findAttemptsByUser() {
+        return repository.findByUserId(authorizationService.getAuthenticatedUserId())
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No sleep attempts found."));
+
     }
 
-    public List<SleepAttempt> findSuccessfulAttemptsByUser(String userId) {
-        return repository.findByUserIdAndSuccess(userId, true)
+    public List<SleepAttempt> findSuccessfulAttemptsByUser() {
+        return repository.findByUserIdAndSuccess(authorizationService.getAuthenticatedUserId(), true)
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No successful sleep attempts found"));
     }
 
-    public List<SleepAttempt> findUnsuccessfulAttemptsByUser(String userId) {
-        return repository.findByUserIdAndSuccess(userId, false)
+    public List<SleepAttempt> findUnsuccessfulAttemptsByUser() {
+        return repository.findByUserIdAndSuccess(authorizationService.getAuthenticatedUserId(), false)
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No successful sleep attempts found"));
     }
 
