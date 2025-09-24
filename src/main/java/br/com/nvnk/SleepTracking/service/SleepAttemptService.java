@@ -2,7 +2,6 @@ package br.com.nvnk.SleepTracking.service;
 
 import br.com.nvnk.SleepTracking.controller.dto.request.SleepAttemptRequest;
 import br.com.nvnk.SleepTracking.entity.SleepAttempt;
-import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.exception.SleepAttemptInvalidException;
 import br.com.nvnk.SleepTracking.exception.SleepAttemptNotFoundException;
 import br.com.nvnk.SleepTracking.repository.SleepAttemptRepository;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +23,6 @@ public class SleepAttemptService {
     private final AuthorizationService authorizationService;
 
     public SleepAttempt save(SleepAttempt sleepAttempt) {
-
-        User byId = userService.findById(sleepAttempt.getUserId());
 
         if (sleepAttempt.getBedTime() == null || sleepAttempt.getWakeTime() == null) {
             throw new SleepAttemptInvalidException("getBedTime and getWakeTime cannot be null.");
@@ -54,6 +50,8 @@ public class SleepAttemptService {
             sleepAttempt.setSleepStartTime(null);
             sleepAttempt.setSleepEndTime(null);
         }
+
+        sleepAttempt.setUserId(authorizationService.getAuthenticatedUserId());
 
         return repository.save(sleepAttempt);
     }
@@ -113,6 +111,18 @@ public class SleepAttemptService {
         return repository.findById(id)
                 .filter(attempt -> attempt.getUserId().equals(userId))
                 .orElseThrow(() -> new SleepAttemptNotFoundException("Sleep attempt not found with id " + id));
+    }
+
+    public SleepAttempt updateSleepAttempt(String id, SleepAttemptRequest request) {
+        SleepAttempt attempt = getSleepAttemptById(id);
+
+        attempt.setBedTime(request.bedTime());
+        attempt.setWakeTime(request.wakeTime());
+        attempt.setSuccess(request.success());
+        attempt.setSleepStartTime(request.sleepStartTime());
+        attempt.setSleepEndTime(request.sleepEndTime());
+
+        return repository.save(attempt);
     }
 
 }

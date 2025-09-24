@@ -137,4 +137,18 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/attempt/{id}")
+    public ResponseEntity<Map<String, Object>> updateSleepAttempt(
+            @PathVariable String id,
+            @RequestBody @Valid SleepAttemptRequest request) {
+
+        SleepAttemptResponse responseDTO = sleepAttemptMapper.toResponse(service.updateSleepAttempt(id, request));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Sleep attempt updated successfully");
+        response.put("Attempt", responseDTO);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
