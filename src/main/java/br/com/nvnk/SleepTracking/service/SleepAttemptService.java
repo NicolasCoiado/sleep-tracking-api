@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -121,6 +122,24 @@ public class SleepAttemptService {
         attempt.setSuccess(request.success());
         attempt.setSleepStartTime(request.sleepStartTime());
         attempt.setSleepEndTime(request.sleepEndTime());
+
+        return repository.save(attempt);
+    }
+
+    public SleepAttempt editSleepAttempt(String id, Map<String, Object> fields) {
+        SleepAttempt attempt = getSleepAttemptById(id);
+
+        fields.forEach((key, value) -> {
+            switch (key) {
+                case "bedTime" -> attempt.setBedTime(LocalDateTime.parse(value.toString()));
+                case "wakeTime" -> attempt.setWakeTime(LocalDateTime.parse(value.toString()));
+                case "success" -> attempt.setSuccess(Boolean.parseBoolean(value.toString()));
+                case "sleepStartTime" -> attempt.setSleepStartTime(LocalDateTime.parse(value.toString()));
+                case "sleepEndTime" -> attempt.setSleepEndTime(LocalDateTime.parse(value.toString()));
+                case "totalTimeInBed" -> attempt.setTotalTimeInBed(Duration.parse(value.toString()));
+                case "totalSleepTime" -> attempt.setTotalSleepTime(Duration.parse(value.toString()));
+            }
+        });
 
         return repository.save(attempt);
     }
