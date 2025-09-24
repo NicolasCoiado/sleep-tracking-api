@@ -144,4 +144,9 @@ public class SleepAttemptService {
         return repository.save(attempt);
     }
 
+    public void deleteSleepAttempt(String id) {
+        SleepAttempt attempt = getSleepAttemptById(id);
+        repository.delete(attempt);
+    }
+
 }

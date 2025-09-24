@@ -166,4 +166,14 @@ public class SleepController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/attempt/{id}")
+    public ResponseEntity<Map<String, Object>> deleteSleepAttempt(@PathVariable String id) {
+        service.deleteSleepAttempt(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Sleep attempt deleted successfully");
+
+        return ResponseEntity.ok(response);
+    }
+
 }
