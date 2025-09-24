@@ -11,7 +11,6 @@ public class SleepAttemptMapper {
 
         SleepAttempt sleepAttempt = new SleepAttempt();
 
-        sleepAttempt.setUserId(sleepAttemptRequest.userId());
         sleepAttempt.setSuccess(sleepAttemptRequest.success());
         sleepAttempt.setBedTime(sleepAttemptRequest.bedTime());
         sleepAttempt.setWakeTime(sleepAttemptRequest.wakeTime());

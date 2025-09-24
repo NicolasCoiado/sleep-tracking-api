@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 public record SleepAttemptRequest(
         @NotNull
-        String userId,
-        @NotNull
         boolean success,
         @NotNull
         LocalDateTime bedTime,
