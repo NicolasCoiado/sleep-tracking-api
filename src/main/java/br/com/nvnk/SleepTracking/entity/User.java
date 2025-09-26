@@ -25,11 +25,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private UserRole userRole;
-
-    @Override
-    public String getUsername (){
-        return email;
-    }
+    private boolean accountLocked = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -44,7 +40,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return !this.accountLocked;
     }
 
     @Override
@@ -52,7 +48,7 @@ public class User implements UserDetails {
         return UserDetails.super.isCredentialsNonExpired();
     }
 
-    @Override
+    @Override // TODO: Implement email verification
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
