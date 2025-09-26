@@ -23,6 +23,9 @@ public class SleepAttemptService {
     private final UserService userService;
     private final AuthorizationService authorizationService;
 
+
+    // GENERAL METHODS:
+
     public SleepAttempt save(SleepAttempt sleepAttempt) {
 
         if (sleepAttempt.getBedTime() == null || sleepAttempt.getWakeTime() == null) {
@@ -60,7 +63,6 @@ public class SleepAttemptService {
     public List<SleepAttempt> findAttemptsByUser() {
         return repository.findByUserId(authorizationService.getAuthenticatedUserId())
                 .orElseThrow(() -> new SleepAttemptNotFoundException("No sleep attempts found."));
-
     }
 
     public List<SleepAttempt> findSuccessfulAttemptsByUser() {
@@ -147,6 +149,20 @@ public class SleepAttemptService {
     public void deleteSleepAttempt(String id) {
         SleepAttempt attempt = getSleepAttemptById(id);
         repository.delete(attempt);
+    }
+
+    // ADMINISTRATOR METHODS:
+
+    public void deleteAllAttemptsFromUser(String id) {
+        List<SleepAttempt> userSleepAttempts = repository.findByUserId(id)
+                .orElseThrow(() -> new SleepAttemptNotFoundException("This user has no Sleep Attempts."));
+
+        repository.deleteAll(userSleepAttempts);
+    }
+
+    public List<SleepAttempt> findAttemptsByUserId(String id) {
+        return repository.findByUserId(id)
+                .orElseThrow(() -> new SleepAttemptNotFoundException("No sleep attempts found."));
     }
 
 }

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -30,9 +32,26 @@ public class UserService {
         return repository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found."));
     }
 
+    public List<User> findAll (){
+        return repository.findAll();
+    }
+
+    public void lockUser(String id) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setAccountLocked(true);
+        repository.save(user);
+    }
+
     public User describeUser (){
         String userId = authorizationService.getAuthenticatedUserId();
         return repository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found."));
+    }
+
+    public void deleteUser (String id){
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        repository.delete(user);
     }
 
 }

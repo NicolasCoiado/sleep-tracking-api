@@ -51,7 +51,6 @@ public class AuthController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("Message", "Login successful.");
-        response.put("User", auth.getPrincipal());
         response.put("Token", token);
 
         return ResponseEntity.ok(response);
