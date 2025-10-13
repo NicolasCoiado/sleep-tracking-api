@@ -23,9 +23,12 @@ public class AuthorizationService implements UserDetailsService {
                 .orElseThrow(() -> new UserNotFoundException("Username not found"));
     }
 
-    public String getAuthenticatedUserId(){
+    public String getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        return user.getId();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User user) {
+            return user.getId();
+        }
+        return null;
     }
 }
