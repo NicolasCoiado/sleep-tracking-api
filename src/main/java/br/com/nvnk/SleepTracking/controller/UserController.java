@@ -24,4 +24,13 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("calculate/ideal-bedtime")
+    public ResponseEntity<Map<String, Object>> calculateIdealBedtime (){
+        Map<String, Object> response = new HashMap<>();
+        response.put("Ideal bedtime: ", service.calculateIdealBedtime());
+
+        return ResponseEntity.ok(response);
+    }
+
 }

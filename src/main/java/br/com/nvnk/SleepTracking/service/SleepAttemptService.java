@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SleepAttemptService {
 
     private final SleepAttemptRepository repository;
-    private final UserService userService;
     private final AuthorizationService authorizationService;
 
 
@@ -144,6 +144,10 @@ public class SleepAttemptService {
         });
 
         return repository.save(attempt);
+    }
+
+    public Optional<List<SleepAttempt>> findByUserIdAndBedTimeBetween(String userId, LocalDateTime start, LocalDateTime end) {
+        return repository.findByUserIdAndBedTimeBetween(userId, start, end);
     }
 
     public void deleteSleepAttempt(String id) {
