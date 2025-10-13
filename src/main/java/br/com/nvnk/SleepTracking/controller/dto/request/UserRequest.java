@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalTime;
+
 public record UserRequest(
         @Size(min = 4, message = "The username must contain at least 4 characters.")
         String username,
@@ -16,5 +18,9 @@ public record UserRequest(
         @Size(min = 6, message = "The password must contain at least 6 characters.")
         String password,
         @NotNull
-        UserRole userRole
+        UserRole userRole,
+        @NotNull
+        LocalTime bedtimeGoal,
+        @NotNull
+        LocalTime targetWakeTime
 ){}

@@ -14,6 +14,8 @@ public class UserMapper {
                 .email(request.email())
                 .password(request.password())
                 .userRole(request.userRole())
+                .bedtimeGoal(request.bedtimeGoal())
+                .targetWakeTime(request.targetWakeTime())
                 .build();
     }
 
@@ -22,7 +24,9 @@ public class UserMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getUserRole()
+                user.getUserRole(),
+                user.getBedtimeGoal(),
+                user.getTargetWakeTime()
         );
     }
 }
