@@ -10,3 +10,21 @@ spring:
        username: ${MONGO_USER}
        password: ${MONGO_PASSWORD}
        authentication-database: admin
+       socket-timeout: 10000
+       connect-timeout: 10000
+
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USER}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
+  redis:
+    host: localhost
+    port: 6379
+    password: ${REDIS_PASSWORD}

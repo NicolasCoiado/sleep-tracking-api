@@ -5,6 +5,7 @@ import br.com.nvnk.SleepTracking.controller.dto.request.UserRequest;
 import br.com.nvnk.SleepTracking.entity.User;
 import br.com.nvnk.SleepTracking.mapper.UserMapper;
 import br.com.nvnk.SleepTracking.security.TokenService;
+import br.com.nvnk.SleepTracking.service.EmailQueueService;
 import br.com.nvnk.SleepTracking.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,19 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final UserService userService;
+    private final EmailQueueService emailQueueService;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register (@Valid @RequestBody UserRequest userRequest){
         User user = UserMapper.toEntity(userRequest);
-
+        user.setAccountLocked(true);
+        user.setEmailVerified(false);
         User savedUser = userService.save(user);
 
+        emailQueueService.enqueueVerificationEmail(savedUser.getId(), savedUser.getEmail());
+
         Map<String, Object> response = new HashMap<>();
-        response.put("Message", "The user has been successfully registered.");
+        response.put("Message", "The user has been successfully registered. Check your email to verify your account.");
         response.put("User details", UserMapper.toResponse(savedUser));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

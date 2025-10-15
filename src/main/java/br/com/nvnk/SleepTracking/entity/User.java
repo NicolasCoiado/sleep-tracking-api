@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private LocalTime bedtimeGoal;
     private LocalTime targetWakeTime;
 
+    private boolean emailVerified = false;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.userRole==UserRole.ROLE_ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
@@ -52,8 +54,8 @@ public class User implements UserDetails {
         return UserDetails.super.isCredentialsNonExpired();
     }
 
-    @Override // TODO: Implement email verification
+    @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return this.emailVerified;
     }
 }
