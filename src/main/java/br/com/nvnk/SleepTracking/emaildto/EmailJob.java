@@ -1,4 +1,4 @@
-package br.com.nvnk.SleepTracking.dto;
+package br.com.nvnk.SleepTracking.emaildto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
