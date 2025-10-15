@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.controller;
 
+import br.com.nvnk.SleepTracking.controller.documentation.VerificationControllerDoc;
 import br.com.nvnk.SleepTracking.service.EmailQueueService;
 import br.com.nvnk.SleepTracking.service.VerificationService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class VerificationController {
+public class VerificationController implements VerificationControllerDoc {
 
     private final VerificationService verificationService;
     private final EmailQueueService emailQueueService;

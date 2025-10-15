@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.controller;
 
+import br.com.nvnk.SleepTracking.controller.documentation.AuthControllerDoc;
 import br.com.nvnk.SleepTracking.controller.dto.request.LoginRequest;
 import br.com.nvnk.SleepTracking.controller.dto.request.UserRequest;
 import br.com.nvnk.SleepTracking.entity.User;
@@ -24,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping ("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerDoc {
 
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;

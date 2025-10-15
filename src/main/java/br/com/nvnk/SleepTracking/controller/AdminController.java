@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.controller;
 
+import br.com.nvnk.SleepTracking.controller.documentation.AdminControllerDoc;
 import br.com.nvnk.SleepTracking.controller.dto.response.UserResponse;
 import br.com.nvnk.SleepTracking.entity.SleepAttempt;
 import br.com.nvnk.SleepTracking.entity.User;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-public class AdminController {
+public class AdminController implements AdminControllerDoc {
 
     private final UserService userService;
     private final SleepAttemptService sleepAttemptService;

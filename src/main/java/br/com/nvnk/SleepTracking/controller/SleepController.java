@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.controller;
 
+import br.com.nvnk.SleepTracking.controller.documentation.SleepControllerDoc;
 import br.com.nvnk.SleepTracking.controller.dto.request.SleepAttemptRequest;
 import br.com.nvnk.SleepTracking.controller.dto.response.SleepAttemptResponse;
 import br.com.nvnk.SleepTracking.entity.SleepAttempt;
@@ -20,7 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping ("/sleep")
 @RequiredArgsConstructor
-public class SleepController {
+public class SleepController implements SleepControllerDoc {
 
     private final SleepAttemptService service;
     private final SleepAttemptMapper sleepAttemptMapper;

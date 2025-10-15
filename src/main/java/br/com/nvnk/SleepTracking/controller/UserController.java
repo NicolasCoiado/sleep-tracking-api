@@ -1,5 +1,6 @@
 package br.com.nvnk.SleepTracking.controller;
 
+import br.com.nvnk.SleepTracking.controller.documentation.UserControllerDoc;
 import br.com.nvnk.SleepTracking.mapper.UserMapper;
 import br.com.nvnk.SleepTracking.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserControllerDoc {
     private final UserService service;
 
     @GetMapping
