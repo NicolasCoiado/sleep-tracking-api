@@ -33,7 +33,8 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/verify").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/reset-request").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/reset-confirm").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**", "/sleep/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
