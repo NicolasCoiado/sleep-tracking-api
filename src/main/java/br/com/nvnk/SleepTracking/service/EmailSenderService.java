@@ -26,7 +26,6 @@ public class EmailSenderService {
             helper.setFrom(fromEmail);
             mailSender.send(message);
         } catch (Exception e) {
-            // logar e (opcional) re-enfileirar
             throw new RuntimeException("Failed to send email", e);
         }
     }

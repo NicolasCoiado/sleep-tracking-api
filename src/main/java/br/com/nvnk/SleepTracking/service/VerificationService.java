@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.Map;
 
 @Service
@@ -16,14 +15,13 @@ public class VerificationService {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final UserRepository userRepository;
-    private final EmailQueueService emailQueueService; // para reenviar
+    private final EmailQueueService emailQueueService;
 
     public boolean verifyRegistrationCode(String email, String code) {
         String key = "verif:register:" + email;
         Object value = redisTemplate.opsForValue().get(key);
         if (value == null) return false;
         if (code.equals(value.toString())) {
-            // marcar user
             User user = userRepository.findByEmail(email).orElseThrow();
             user.setEmailVerified(true);
             user.setAccountLocked(false);
@@ -68,7 +66,6 @@ public class VerificationService {
     }
 
     public void resendRegistrationCode(String email) {
-        // pega user, obtem userId e chama emailQueueService.enqueueVerificationEmail
         User user = userRepository.findByEmail(email).orElseThrow();
         emailQueueService.enqueueVerificationEmail(user.getId(), email);
     }
