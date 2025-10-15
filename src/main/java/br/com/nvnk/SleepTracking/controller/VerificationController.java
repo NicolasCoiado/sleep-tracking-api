@@ -50,22 +50,4 @@ public class VerificationController {
         if (ok) return ResponseEntity.ok(Map.of("message", "Password updated"));
         return ResponseEntity.badRequest().body(Map.of("error", "Invalid or expired code"));
     }
-
-    @PostMapping("/change-email-request")
-    public ResponseEntity<?> requestEmailChange(@RequestBody Map<String, String> body) {
-        String userId = body.get("userId");
-        String newEmail = body.get("newEmail");
-        // ideally authorize userId == auth user
-        emailQueueService.enqueueEmailChangeVerification(userId, newEmail);
-        return ResponseEntity.ok(Map.of("message", "Email change verification sent"));
-    }
-
-    @PostMapping("/change-email-confirm")
-    public ResponseEntity<?> confirmEmailChange(@RequestBody Map<String, String> body) {
-        String userId = body.get("userId");
-        String code = body.get("code");
-        boolean ok = verificationService.confirmEmailChange(userId, code);
-        if (ok) return ResponseEntity.ok(Map.of("message", "Email changed"));
-        return ResponseEntity.badRequest().body(Map.of("error", "Invalid or expired code"));
-    }
 }
